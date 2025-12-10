@@ -1,0 +1,3 @@
+Meli Radevsk 100.0 100.0 100.0 100.00 A
+Nikola Iliev 100.0 30.0 50.0 56.50 E
+Ivo Ogjn 10.0 10.0 10.0 10.00 F
