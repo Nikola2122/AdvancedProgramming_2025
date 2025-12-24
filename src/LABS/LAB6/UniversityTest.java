@@ -226,30 +226,27 @@ class University {
     }
 
 
-    public University mergeFourSmallestDepartments2() {
-        Department merged = departments.stream()
+    public University mergeFourSmallestDepartments2() { // POGRESNO E SO IDENTITY, VAKA TREBA
+        Optional<Department> merged = departments.stream()
                 .sorted(Comparator.comparing(
                         d -> d.getCourses().stream().mapToInt(Course::getEnrolledStudents).sum()
                 ))
                 .limit(4)
-                .reduce(new Department("", new ArrayList<>()),(d1, d2) -> new Department(
-                        d1.getName() + " & " + d2.getName(),
+                .reduce((d1, d2) -> new Department(
+                        d1.getName() + " & " + d2.getName(),    // merge names
                         Stream.concat(d1.getCourses().stream(),
-                                        d2.getCourses().stream())
+                                        d2.getCourses().stream()) // merge courses
                                 .collect(Collectors.toList())
                 ));
 
-        List<Department> updated = Stream.concat(
-
+        List<Department> updated = (
                 departments.stream()
                         .sorted(Comparator.comparing(
                                 d -> d.getCourses().stream().mapToInt(Course::getEnrolledStudents).sum()
                         ))
-                        .skip(4),
-
-                Stream.of(merged)
-
+                        .skip(4)
         ).collect(Collectors.toList());
+        updated.add(merged.get());
 
         return new University(updated);
     }
