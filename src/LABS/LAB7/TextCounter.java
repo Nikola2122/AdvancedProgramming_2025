@@ -83,7 +83,7 @@ public class TextCounter {
         ExecutorService executor =
                 Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-        List<Future<Counter>> futures = tasks.stream().map(executor::submit).collect(Collectors.toList());
+        List<Future<Counter>> futures = executor.invokeAll(tasks);
 
 
         //TODO invoke All tasks on the executor and create a List<Future<?>>

@@ -93,7 +93,7 @@ class deadlineDecorator extends TaskDecorator {
     @Override
     public String toString() {
         return this.wrapped.toString().replace("}", "") +
-                "deadline=" + deadline + "}";
+                ", deadline=" + deadline + "}";
     }
 }
 
@@ -118,7 +118,7 @@ class priorityDecorator extends TaskDecorator {
     @Override
     public String toString() {
         return this.wrapped.toString().replace("}", "") +
-                "priority=" + priority + "}";
+                ", priority=" + priority + "}";
     }
 }
 
@@ -137,7 +137,7 @@ class TaskManager {
         } else if (tokens.length == 4) {
             if (tokens[3].contains("T")) {
                 LocalDateTime deadline = LocalDateTime.parse(tokens[3]);
-                if (deadline.isBefore(LocalDateTime.parse("2020-06-01T23:59:59"))) {
+                if (deadline.isBefore(LocalDateTime.parse("2020-06-02T00:00:00"))) {
                     throw new DeadlineNotValidException(deadline.toString());
                 }
                 return new deadlineDecorator(new Task1(category, name, description), deadline);
@@ -146,7 +146,7 @@ class TaskManager {
             }
         } else {
             LocalDateTime deadline = LocalDateTime.parse(tokens[3]);
-            if (deadline.isBefore(LocalDateTime.parse("2020-06-01T23:59:59"))) {
+            if (deadline.isBefore(LocalDateTime.parse("2020-06-02T00:00:00"))) {
                 throw new DeadlineNotValidException(deadline.toString());
             }
             return new priorityDecorator(
