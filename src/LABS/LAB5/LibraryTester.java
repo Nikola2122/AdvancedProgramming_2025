@@ -168,15 +168,22 @@ class LibrarySystem{
     }
 
     void printTopAuthors(){
-        books.values().stream().collect(Collectors.groupingBy(
+        Map<String, Integer> map = books.values().stream().collect(Collectors.groupingBy(
                 Book::getAuthor,
                 HashMap::new,
                 Collectors.collectingAndThen(
                         Collectors.summingInt(Book::getTotalBorrows),
                         Integer::intValue
                 )
-        )).entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue(Comparator.reverseOrder()).
-                thenComparing(Map.Entry.comparingByKey())).forEach((e) -> System.out.println(e.getKey() + " - " + e.getValue()));
+        ));
+//                .entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue(Comparator.reverseOrder()).
+//                thenComparing(Map.Entry.comparingByKey())).forEach((e) -> System.out.println(e.getKey() + " - " + e.getValue()));
+        map.entrySet().stream().collect(Collectors.toMap(
+                Map.Entry::getKey,
+                Map.Entry::getValue,
+                (v1, v2) -> v1,
+                () -> new TreeMap<>(Comparator.comparing(map::get, Comparator.reverseOrder()))
+        )).forEach((key, value) -> System.out.println(key + " - " + value));
     }
 
     Map<String, Book> getTopBookPerAuthor(){

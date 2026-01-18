@@ -260,6 +260,14 @@ class University {
                 filter(d -> d.getCourses().stream().anyMatch(c -> c.getDifficulty() > difficultyThreshold)).
                 collect(Collectors.toList());
     }
+    Optional<Department> getTopDepartmentByAverageDifficulty(){
+        return departments.stream().max(Comparator.comparing(s -> s.getCourses().stream().
+                mapToInt(Course::getDifficulty).average().getAsDouble()));
+    }
+    List<Course> getCoursesWithNameContaining(String substring){
+        return departments.stream().flatMap(s -> s.getCourses().stream()).
+                filter(c -> c.getName().contains(substring)).collect(Collectors.toList());
+    }
 }
 
 public class UniversityTest {

@@ -1,4 +1,4 @@
-package KOLOKVIUMSKI;
+package KOLOKVIUMSKI.DESIGN_PATTERN;
 import java.util.*;
 
 interface Observer {
